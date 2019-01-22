@@ -8,7 +8,21 @@ MongoClient.connect('mongodb://localhost:27017/TodoApp', (err, db) => {
         return console.log('Unable to connect to MongoDB')
     }
     console.log('Connection Successful')
-    db.collection('Todos').find({_id: new ObjectID('5c45e5c4210b9d79e811ad6c')}).toArray().then( (docs) => {
+
+    // Delete Many
+    // db.collection('Todos').deleteMany({text: 'New Todo'}).then((res)=> {
+    //     console.log(res)
+    // }, (err) => {
+    //     console.log('Unable to delete with the search criteria', err)
+    // })
+
+    // db.collection("Todos").deleteOne({text: 'Set Alarm'}).then((res)=> {
+    //         console.log('Successfully deleted Set Alaram todo', res.result)
+    //     }, (err) => {
+    //         console.log('Unable to delete with the search criteria', err)
+    //     })
+
+    db.collection('Todos').find({text: 'Set Alarm'}).toArray().then( (docs) => {
         console.log(JSON.stringify(docs, undefined, 2) )
     }, (err) => {
         console.log('Unable to fetch documents',err)
