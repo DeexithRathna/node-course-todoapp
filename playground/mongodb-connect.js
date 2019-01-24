@@ -1,4 +1,7 @@
-const {MongoClient, ObjectID} = require('mongodb');
+const {
+    MongoClient,
+    ObjectID
+} = require('mongodb');
 
 var objId = new ObjectID()
 
@@ -21,34 +24,50 @@ MongoClient.connect('mongodb://localhost:27017/TodoApp', (err, db) => {
     //     }, (err) => {
     //         console.log('Unable to delete with the search criteria', err)
     //     })
-
-    db.collection('Todos').find({text: 'Set Alarm'}).toArray().then( (docs) => {
-        console.log(JSON.stringify(docs, undefined, 2) )
+    db.collection('Users').findOneAndUpdate({
+            name: 'Deexith Reddy'
+        }, {
+            $set: {
+                name: 'Deexith Reddy Rathna'
+            },
+            $inc: {
+                age: 1
+            },            
+        }, {
+            returnOriginal: false
+        }
+    ).then((res) => {
+        console.log('Updation successful',res)
     }, (err) => {
-        console.log('Unable to fetch documents',err)
+        console.log("Error in updating", err)
     })
-    // db.collection('Todos').insertOne(
-    //     {
-    //         text: 'New Todo',
-    //         completed: false
-    //     }, (err, res) => {
-    //         if(err){
-    //             return console.log('Unable to insert record', err)
-    //         }
-    //         console.log(JSON.stringify(res.ops, undefined, 2))
-    //     })
+// db.collection('Todos').find({text: 'Set Alarm'}).toArray().then( (docs) => {
+//     console.log(JSON.stringify(docs, undefined, 2) )
+// }, (err) => {
+//     console.log('Unable to fetch documents',err)
+// })
+// db.collection('Todos').insertOne(
+//     {
+//         text: 'New Todo',
+//         completed: false
+//     }, (err, res) => {
+//         if(err){
+//             return console.log('Unable to insert record', err)
+//         }
+//         console.log(JSON.stringify(res.ops, undefined, 2))
+//     })
 
-    // db.collection('Users').insertOne(
-    //     {
-    //         name: 'Deexith Rathna',
-    //         age: 24,
-    //         location: 'Hyderabad'
-    //     }, (err, res) => {
-    //         if(err){
-    //             return console.log('Unable to insert record', err)
-    //         }
-    //         console.log(JSON.stringify(res.ops, undefined, 2))
-    //     })
+// db.collection('Users').insertOne(
+//     {
+//         name: 'Deexith Rathna',
+//         age: 24,
+//         location: 'Hyderabad'
+//     }, (err, res) => {
+//         if(err){
+//             return console.log('Unable to insert record', err)
+//         }
+//         console.log(JSON.stringify(res.ops, undefined, 2))
+//     })
 
-    db.close()
+db.close()
 })
