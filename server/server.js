@@ -9,20 +9,37 @@ var app = express()
 
 app.use(bodyParser.json())
 
+
+// POST /todos - single item
 app.post('/todos', (req,res) => {
     var todo = new Todo({
         text: req.body.text
     })
     todo.save().then((doc) => {
-        console.log('Saved to db', doc)
-        res.send('Success')
+        res.send(doc)
     }, (err) => {
-        console.log('Error in saving to db', err)
         res.status(400).send(err)
     })
 })
 
+
+// GET /todos - all items
+app.get('/todos', (req,res) => {
+    Todo.find().then((todos) => 
+    {
+        res.send({todos})
+    }, (err) => {
+        res.status(400).send(err)
+    })
+})
+
+// GET /todos/id - get specific item by Id
+app.get('/todos/:id', (req,res) => {
+    res.send(req.params)
+})
 app.listen(3000, () => {
     console.log('Started express webapp')
 })
+
+module.exports = {app}
 
